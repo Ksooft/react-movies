@@ -28,12 +28,16 @@ class Main extends Component {
     
     // first mount
     componentDidMount() {
-        fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`)
+        fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`)
             .then(response => response.json())
             .then(data => this.setState({ movies: data.Search, 
                 isLoaded: true, 
                 postsPerPage: Math.ceil(data.totalResults / 10),
                 lastRequest: 'matrix' }))
+            .catch(err => {
+                console.error(err);
+                this.setState({ isLoaded: false })
+            })
     }
 
     // onclick link to reload page
@@ -50,7 +54,7 @@ class Main extends Component {
 
     // search movies
     searchMovies = (value, type = 'all') => {
-        const url = `http://www.omdbapi.com/?apikey=${API_KEY}&s=${value ? value : 'matrix'}${type !== 'all' ? `&type=${type}` : ''}`
+        const url = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${value ? value : 'matrix'}${type !== 'all' ? `&type=${type}` : ''}`
         this.setState({isLoaded: false, lastRequest: `${value ? value : 'matrix'}`, type})
         this.state.currentPage !== 1 && this.setState({ currentPage: 1})
         fetch(url)
@@ -58,6 +62,10 @@ class Main extends Component {
             .then(data => { this.setState({ movies: data.Search, 
                 isLoaded: true,
                 postsPerPage: Math.ceil(data.totalResults / 10) }) })
+            .catch(err => {
+                console.error(err);
+                this.setState({ isLoaded: false })
+            })
     }
 
     // change type search
@@ -72,9 +80,13 @@ class Main extends Component {
         this.setState({ isLoadedModal: false })
         const id = e.currentTarget.dataset.id
         setTimeout(() => {
-            fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`)
+            fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`)
                 .then(response => response.json())
                 .then(data => this.setState({ modal: true, modalContent: data, isLoadedModal: true }))
+                .catch(err => {
+                    console.error(err);
+                    this.setState({ isLoadedModal: false })
+                })
         }, 500);
         document.querySelector('.modal-detail-content').scrollTop = 0
     }
@@ -87,9 +99,13 @@ class Main extends Component {
             const movie = this.state.lastRequest
             const type = this.state.type
             setTimeout(() => {
-                fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${movie}${type !== 'all' ? `&type=${type}` : ''}&page=${number}`)
+                fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${movie}${type !== 'all' ? `&type=${type}` : ''}&page=${number}`)
                     .then(response => response.json())
                     .then(data => this.setState({ movies: data.Search, isLoaded: true }))
+                    .catch(err => {
+                        console.error(err);
+                        this.setState({ isLoaded: false })
+                    })
             }, 300);
         } 
     }
