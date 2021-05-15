@@ -28,12 +28,12 @@ class Main extends Component {
     
     // first mount
     componentDidMount() {
-        fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`)
+        fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=iron`)
             .then(response => response.json())
             .then(data => this.setState({ movies: data.Search, 
                 isLoaded: true, 
                 postsPerPage: Math.ceil(data.totalResults / 10),
-                lastRequest: 'matrix' }))
+                lastRequest: 'iron' }))
             .catch(err => {
                 console.error(err);
                 this.setState({ isLoaded: false })
@@ -43,9 +43,9 @@ class Main extends Component {
     // onclick link to reload page
     componentDidUpdate(prevProps) {
         if (prevProps.reboot !== this.props.reboot && this.props.reboot) {
-            if (this.state.lastRequest !== 'matrix') {
+            if (this.state.lastRequest !== 'iron') {
                 this.searchMovies()
-            } else if (this.state.lastRequest === 'matrix' && this.state.type !== 'all') {
+            } else if (this.state.lastRequest === 'iron' && this.state.type !== 'all') {
                 this.searchMovies()
             }
             
@@ -54,8 +54,8 @@ class Main extends Component {
 
     // search movies
     searchMovies = (value, type = 'all') => {
-        const url = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${value ? value : 'matrix'}${type !== 'all' ? `&type=${type}` : ''}`
-        this.setState({isLoaded: false, lastRequest: `${value ? value : 'matrix'}`, type})
+        const url = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${value ? value : 'iron'}${type !== 'all' ? `&type=${type}` : ''}`
+        this.setState({isLoaded: false, lastRequest: `${value ? value : 'iron'}`, type})
         this.state.currentPage !== 1 && this.setState({ currentPage: 1})
         fetch(url)
             .then(response => response.json())
