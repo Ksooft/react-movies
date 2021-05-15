@@ -1,38 +1,231 @@
-.App {
-  text-align: center;
+html {
+  scroll-behavior: smooth;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+nav {
+  padding: 0 1rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.hide {
+  display: none !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.content {
+  min-height: calc(100vh - 70px - 64px);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 1rem;
+  gap: 1rem;
+}
+
+.btn-search {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+label:not(:last-child) {
+    margin-right: 1rem;
+}
+
+[type="radio"]:not(:checked)+span, [type="radio"]:checked+span {
+  padding-left: 30px;
+}
+
+.modal-detail {
   display: flex;
-  flex-direction: column;
+  position: fixed;
+  
+  width: 100vw;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .4);
+  backdrop-filter: blur(10px);
+  z-index: 10;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
 }
 
-.App-link {
-  color: #61dafb;
+.modal-detail.open {
+  pointer-events: all;
+  opacity: 1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.modal-detail-content {
+  max-height: 950px;
+  max-width: 700px;
+  background-color: #fff;
+  padding: 0px 20px 20px 20px;
+  border-radius: 12px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.modal-detail-content::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.modal-close {
+  cursor: pointer;
+  float: right;
+  font-size: 22px;
+}
+
+.modal-title {
+  margin-top: 30px;
+}
+
+.modal-title span {
+  font-size: 14px;
+}
+
+.modal-preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .2);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+}
+
+.modal-collection li {
+  border-bottom: 1px solid #cccccc;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+
+.modal-key {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.modal-value {
+  font-size: 14px;
+  display: block;
+}
+
+.modal-ratings {
+  display: block;
+  font-size: 13px;
+  padding-left: 15px;
+  position: relative;
+}
+
+.modal-ratings:before {
+  content: '';
+  position: absolute;
+  top: 60%;
+  transform: translateY(-50%);
+  left: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0.87);
+}
+
+.modal-ratings-source {
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.pagination li a {
+  line-height: inherit;
+}
+
+.hover {
+  transition: background-color .2s;
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+.hover:hover {
+  background-color: #ee6e73;
+}
+
+.hover:hover a {
+  color: #fff;
+}
+
+.disabled a {
+  cursor: not-allowed !important;
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
+    background-color: #40c4ff;
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
+    border: 2px solid #40c4ff;
+}
+
+@media (max-width: 780px) {
+  .modal-detail-content {
+    max-width: 550px;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media (max-width: 600px) {
+  .modal-detail-content {
+    max-width: 450px;
+  }
+}
+
+@media (max-width: 500px) {
+  .modal-detail-content {
+    max-width: 350px;
+  }
+  .modal-ratings-source {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .modal-detail-content {
+    max-width: 280px;
+  }
+}
+
+@media (max-height: 960px) {
+  .modal-detail-content {
+    max-height: 850px;
+  }
+}
+
+@media (max-height: 855px) {
+  .modal-detail-content {
+    max-height: 750px;
+  }
+}
+
+@media (max-height: 750px) {
+  .modal-detail-content {
+    max-height: 650px;
+  }
+}
+
+@media (max-height: 650px) {
+  .modal-detail-content {
+    max-height: 598px;
+  }
+}
+
+@media (max-height: 600px) {
+  .modal-detail-content {
+    max-height: 540px;
   }
 }
