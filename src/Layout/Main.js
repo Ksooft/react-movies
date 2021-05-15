@@ -28,7 +28,7 @@ class Main extends Component {
     
     // first mount
     componentDidMount() {
-        fetch(`http://www.omdbapi.com/?apikey=c773444&s=matrix`)
+        fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`)
             .then(response => response.json())
             .then(data => this.setState({ movies: data.Search, 
                 isLoaded: true, 
@@ -50,7 +50,7 @@ class Main extends Component {
 
     // search movies
     searchMovies = (value, type = 'all') => {
-        const url = `http://www.omdbapi.com/?apikey=c773444&s=${value ? value : 'matrix'}${type !== 'all' ? `&type=${type}` : ''}`
+        const url = `http://www.omdbapi.com/?apikey=${API_KEY}&s=${value ? value : 'matrix'}${type !== 'all' ? `&type=${type}` : ''}`
         this.setState({isLoaded: false, lastRequest: `${value ? value : 'matrix'}`, type})
         this.state.currentPage !== 1 && this.setState({ currentPage: 1})
         fetch(url)
@@ -72,7 +72,7 @@ class Main extends Component {
         this.setState({ isLoadedModal: false })
         const id = e.currentTarget.dataset.id
         setTimeout(() => {
-            fetch(`http://www.omdbapi.com/?apikey=c773444&i=${id}`)
+            fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`)
                 .then(response => response.json())
                 .then(data => this.setState({ modal: true, modalContent: data, isLoadedModal: true }))
         }, 500);
@@ -87,7 +87,7 @@ class Main extends Component {
             const movie = this.state.lastRequest
             const type = this.state.type
             setTimeout(() => {
-                fetch(`http://www.omdbapi.com/?apikey=c773444&s=${movie}${type !== 'all' ? `&type=${type}` : ''}&page=${number}`)
+                fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${movie}${type !== 'all' ? `&type=${type}` : ''}&page=${number}`)
                     .then(response => response.json())
                     .then(data => this.setState({ movies: data.Search, isLoaded: true }))
             }, 300);
